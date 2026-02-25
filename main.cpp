@@ -1,16 +1,19 @@
 #include <QCoreApplication>
 #include <QFileInfo>
 #include <QString>
-#include <iostream>
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    QString const Name = QString('C:\\Users\\User\\Desktop\\TRPO\\drh.txt');
-    QFileInfo File = QFileInfo(Name);
-    std::cout << 'FFFFFFFFFFF';
-    std::cout << File.exists();
+    const QString &str = "C:\\Users\\User\\Desktop\\TRPO\\drh.txt";
+    qDebug() << str;
+
+    QFileInfo file1(str);
+    qDebug() << file1.exists();
+    qDebug() << file1.size();
+
 
     return a.exec();
 }

@@ -11,7 +11,9 @@ SOURCES += \
         fileiswatched.cpp \
         filemanager.cpp \
         inputhandler.cpp \
-        main.cpp
+        ispecification.cpp \
+        main.cpp \
+        uncorrectpathspecification.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -22,4 +24,6 @@ HEADERS += \
     errorhandler.h \
     fileiswatched.h \
     filemanager.h \
-    inputhandler.h
+    inputhandler.h \
+    ispecification.h \
+    uncorrectpathspecification.h

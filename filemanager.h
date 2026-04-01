@@ -1,32 +1,40 @@
 #ifndef FILEMANAGER_H
 #define FILEMANAGER_H
 #include <QString>
-#include <QVector>
+#include <QList>
+#include <fileiswatched.h>
+#include <QCoreApplication>
 
-class FileManager: QObject
+class FileManager: public QObject
 {
-public:
+    Q_OBJECT
+public:   
     static FileManager& Instance();
-    void filesCheck();
-    void fileConnect(const QString& path);
-    void fileDisconnect(const QString& path);
+
+    bool fileConnect(const QString& path);
+    bool fileDisconnect(const QString& path);
+
+    void allFilesDisconnect(); //отключение всех файлов при выходе из программы
 
 signals:
-    void fileChanged();
-    void fileDeleted();
-    void fileInit();
-    void fileMoved();
+    void logMessage(const QString& message); //сигнал для логера
 
 public slots:
-    void exitProgramm();
+    void checkAllFiles(); //проверка состояний всех подключённых файлов каждый такт таймера
+    void inputHandler(const QString& str); //обработка входной строки
+    void fileStateChanged(const QString& path, qint64 size, bool exists, ChangeType change); //слот для сигнала stateChanged от объекта FileIsWatched
 
 private:
-    FileManager();
+    explicit FileManager(QObject* parent = nullptr);
     ~FileManager();
     FileManager(FileManager const&);
     FileManager& operator= (FileManager const&);
 
-    QVector <const QString&> m_files;
+    FileIsWatched* findFile(const QString& path) const; //вспомогательный метод нахождения файла по пути в списке подключённых. Используется в подключении и отключении, а также в обработке входной строки. const после списка параметров отвечает за отстутсвие изменений полей объекта FileManager, например, списка подключённых файлов, т к поиск не должен менять список
+
+    void exitProgramm();//метод, который будет срабатывать при выходе из программы словом EXIT, будет вызываться в слоте менеджера, который обрабатывает строку
+
+    QList<FileIsWatched*> m_files;
 };
 
 #endif // FILEMANAGER_H

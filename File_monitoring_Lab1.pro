@@ -7,13 +7,12 @@ CONFIG += c++17 cmdline
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        errorhandler.cpp \
+        Parser.cpp \
         fileiswatched.cpp \
         filemanager.cpp \
-        inputhandler.cpp \
-        ispecification.cpp \
-        main.cpp \
-        uncorrectpathspecification.cpp
+        ilog.cpp \
+        logtoconsole.cpp \
+        main.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -21,9 +20,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    errorhandler.h \
+    Parser.h \
     fileiswatched.h \
     filemanager.h \
-    inputhandler.h \
-    ispecification.h \
-    uncorrectpathspecification.h
+    ilog.h \
+    logtoconsole.h

@@ -1,6 +1,7 @@
 #include "filemanager.h"
+#include <QDebug>
 
-static FileManager& FileManager::Instance()
+FileManager& FileManager::Instance()
 {
     static FileManager manager;
     return manager;
@@ -66,40 +67,34 @@ void FileManager::allFilesDisconnect()
 
 void FileManager::checkAllFiles()
 {
+    //qDebug() << "checkAllFiles: tracking" << m_files.size() << "files";
     for (FileIsWatched* file : m_files)
     {
         file->checkState();
     }
 }
 
-void FileManager::inputHandler(const QString& str)
+void FileManager::inputString(const QString& str)
 {
-    QString trim_str = str.trimmed();
-
-    if (trim_str.isEmpty())
+  if (str.isEmpty())
     {
-        return;//если на вход пришла пустая строка, то мы не передаём её на подключение
-    }
-
-    if (trim_str.compare("EXIT") == 0) //нам необходимо непросто найти ключевое слово со входящей строкой, нам необходимо сравнить её лексически (возвращает 0 в случае, если строки лексически равн). Т к возможен случай папки с таким названием или пути к файлу под названием EXIT.txt Отметим, что функция ЧУВСТВИТЕЛЬНА к регистру. Можно это исправить, введя второй аргумент Qt::CaseInsensitive
-    {
-        exitProgramm(); // вызов метода подготовки программы к завершению
-        return;
+        return;//если на вход пришла пустая строка, то мы не передаём её на подключение. Повторная проверка
     }
 
     //основная часть обработки
-    if (findFile(trim_str))
+    if (findFile(str))
     {
-        fileDisconnect(trim_str);
+        fileDisconnect(str);
     }
     else
     {
-        fileConnect(trim_str);
+        fileConnect(str);
     }
 }
 
 void FileManager::fileStateChanged(const QString &path, qint64 size, bool exists, ChangeType change)
 {
+    //emit logMessage("fileStateChanged received");
     //начинаем формировать сообщение для передачи в логер
     QString message;
 
@@ -123,7 +118,7 @@ void FileManager::fileStateChanged(const QString &path, qint64 size, bool exists
 
     if(exists)
     {
-        message += " exists, its size: " + QString::number(size) + " байт.";
+        message += " exists, its size: " + QString::number(size) + " bites.";
     }
     else
     {

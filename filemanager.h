@@ -21,8 +21,10 @@ signals:
 
 public slots:
     void checkAllFiles(); //проверка состояний всех подключённых файлов каждый такт таймера
-    void inputHandler(const QString& str); //обработка входной строки
+    void inputString(const QString& str); //обработка входной строки
     void fileStateChanged(const QString& path, qint64 size, bool exists, ChangeType change); //слот для сигнала stateChanged от объекта FileIsWatched
+    void exitProgramm();//слот, который будет срабатывать при выходе из программы словом EXIT
+
 
 private:
     explicit FileManager(QObject* parent = nullptr);
@@ -32,7 +34,6 @@ private:
 
     FileIsWatched* findFile(const QString& path) const; //вспомогательный метод нахождения файла по пути в списке подключённых. Используется в подключении и отключении, а также в обработке входной строки. const после списка параметров отвечает за отстутсвие изменений полей объекта FileManager, например, списка подключённых файлов, т к поиск не должен менять список
 
-    void exitProgramm();//метод, который будет срабатывать при выходе из программы словом EXIT, будет вызываться в слоте менеджера, который обрабатывает строку
 
     QList<FileIsWatched*> m_files;
 };

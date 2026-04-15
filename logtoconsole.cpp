@@ -7,3 +7,8 @@ void LogToConsole::printLog(const QString &message)
     std::cout << message.toStdString() << std::endl; //Напрямую cuot не может вывести QString, из-за разных типов данных. Поэтому используем метод toStdString()
 
 }
+
+void LogToConsole::printLogSlot(const QString& message)
+{
+    printLog(message);
+}

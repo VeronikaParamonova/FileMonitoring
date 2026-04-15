@@ -27,7 +27,7 @@ signals:
 
 private:
     QString m_path;
-    int m_size;
+    qint64 m_size;
     bool m_exists;
 
     bool m_firstCheck; //флаг, используемый в методе checkState(), для вывода первоначального состояния при подключении

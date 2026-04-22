@@ -3,9 +3,7 @@
 
 InputHandler::InputHandler(QObject* parent): QObject(parent)
 {
-    HANDLE in = GetStdHandle(STD_INPUT_HANDLE);//получаем дескриптор консольного ввода Windows
-    m_winevent_notifier = new QWinEventNotifier(in, this);//передаём парсер в качестве родителя, чтобы удалить QWinEventNotifier при удалении парсера автоматически
-    connect(m_winevent_notifier, QWinEventNotifier::activated, this, &InputHandler::preparationRead);
+
 }
 
 InputHandler::~InputHandler()
@@ -24,10 +22,8 @@ int InputHandler::count(QString str, QString substr)
     return count;
 }
 
-void InputHandler::preparationRead()
+void InputHandler::preparationRead(QString str)
 {
-    QTextStream input(stdin);
-    QString str = input.readLine();
     str = str.trimmed();
 
     if (str.isEmpty())
@@ -59,11 +55,16 @@ void InputHandler::preparationRead()
 
     //создание списка всех названий из пути
     QChar re1 = ':';
-    QChar re2 = '/';
+    QChar re2 = '\\';
     QList<QString> names = str.split(re1);
-    QString path_without_disk = names[0];
+
+    if (names.size() > 1)
+    {
+    QString path_without_disk = names[1];
+
     names.removeLast();
     names += path_without_disk.split(re2);
+    }
 
     //создаём список запрещённых элементов в названиях пути
     QList<QString> filter = {"\\", "/", ":", "*", "?", "\"", "<", ">", "|", "CON", "PRN", "AUX", "NUL"};
@@ -80,6 +81,7 @@ void InputHandler::preparationRead()
         filter.append(s);
     }
 
+
     for (int i = 0; i < names.size(); i++)
         for (int j = 0; j < filter.size(); j++ )
         {
@@ -90,7 +92,6 @@ void InputHandler::preparationRead()
             }
         }
 
-    //qDebug() << "InputHandler emits inputString:" << str;
     emit transmissionPath(str);
 
 }

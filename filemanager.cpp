@@ -67,7 +67,7 @@ void FileManager::allFilesDisconnect()
 
 void FileManager::checkAllFiles()
 {
-    //qDebug() << "checkAllFiles: tracking" << m_files.size() << "files";
+
     for (FileIsWatched* file : m_files)
     {
         file->checkState();
@@ -94,7 +94,6 @@ void FileManager::inputString(const QString& str)
 
 void FileManager::fileStateChanged(const QString &path, qint64 size, bool exists, ChangeType change)
 {
-    //emit logMessage("fileStateChanged received");
     //начинаем формировать сообщение для передачи в логер
     QString message;
 
@@ -144,5 +143,6 @@ void FileManager::exitProgramm()
 {
     emit logMessage("Exiting the program...");
     allFilesDisconnect();
+
     QCoreApplication::quit();
 }

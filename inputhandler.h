@@ -1,8 +1,6 @@
 #ifndef INPUTHANDLER_H
 #define INPUTHANDLER_H
 #include <QObject>
-#include <QWinEventNotifier>
-#include <windows.h>
 #include <QTextStream>
 #include <iostream>
 #include <QString>
@@ -20,10 +18,9 @@ signals:
     void logMessage(const QString& message); //сигнал для логера
     void exitWord();
     void transmissionPath(QString str);
-private slots:
-    void preparationRead();
+public slots:
+    void preparationRead(QString str);
 private:
-    QWinEventNotifier* m_winevent_notifier;
 };
 
 #endif // INPUTHANDLER_H

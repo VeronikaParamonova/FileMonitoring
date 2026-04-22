@@ -20,7 +20,7 @@ public:
     qint64 getSize() {return m_size;}
     bool getExists() {return m_exists;}
 
-    bool getFirstCheck() {return m_firstCheck;}
+    bool getFirstCheck() {return m_first_check;}
 
 signals:
     void stateChanged(const QString& path, qint64 size, bool exists, ChangeType change); //сигнал при изменении состояния файла. Будет передавать путь к файлу, существование, размер и тип изменения
@@ -30,7 +30,7 @@ private:
     qint64 m_size;
     bool m_exists;
 
-    bool m_firstCheck; //флаг, используемый в методе checkState(), для вывода первоначального состояния при подключении
+    bool m_first_check; //флаг, используемый в методе checkState(), для вывода первоначального состояния при подключении
 };
 
 #endif // FILEISWATCHED_H

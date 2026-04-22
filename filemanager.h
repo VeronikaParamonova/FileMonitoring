@@ -18,7 +18,6 @@ public:
 
 signals:
     void logMessage(const QString& message); //сигнал для логера
-
 public slots:
     void checkAllFiles(); //проверка состояний всех подключённых файлов каждый такт таймера
     void inputString(const QString& str); //обработка входной строки

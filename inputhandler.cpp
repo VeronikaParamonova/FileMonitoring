@@ -76,7 +76,7 @@ void InputHandler::preparationRead(QString str)
     }
 
 
-    //создаём список запрещённых элементов в названиях пути
+     //создаём список запрещённых элементов в названиях пути
     QList<QString> filter = {"\\", "/", ":", "*", "?", "\"", "<", ">", "|", "CON", "PRN", "AUX", "NUL"};
     for (int i = 1; i <= 9; i++)
     {
@@ -95,7 +95,7 @@ void InputHandler::preparationRead(QString str)
     for (int i = 0; i < names.size(); i++)
         for (int j = 0; j < filter.size(); j++ )
         {
-            if (names[i].contains(filter[j]))
+            if (names[i].contains(filter[j]) || names[i].compare("") == 0 )
             {
                 emit logMessage("ERROR: file path contains illegal characters");
                 return;

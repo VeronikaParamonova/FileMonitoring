@@ -66,6 +66,16 @@ void InputHandler::preparationRead(QString str)
     names += path_without_disk.split(re2);
     }
 
+
+    if (names.size() == 1)
+    {
+    QString path_without_disk = names[0];
+
+    names.removeLast();
+    names += path_without_disk.split(re2);
+    }
+
+
     //создаём список запрещённых элементов в названиях пути
     QList<QString> filter = {"\\", "/", ":", "*", "?", "\"", "<", ">", "|", "CON", "PRN", "AUX", "NUL"};
     for (int i = 1; i <= 9; i++)

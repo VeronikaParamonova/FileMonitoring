@@ -21,7 +21,8 @@ int main(int argc, char *argv[])
 
     QTimer consoleTimer;
     QObject::connect(&consoleTimer, &QTimer::timeout, [&]() {
-        if (_kbhit()) {
+        if (_kbhit()) //_kbhit() — это функция, которая проверяет консоль на наличие нажатий клавиш, не приостанавливая выполнение программы. Она возвращает ненулевое значение, если клавиша нажата, и в противном случае, что позволяет создавать неблокирующий ввод.
+        {
             QTextStream in(stdin);
             QString line = in.readLine();
             if (!line.isEmpty()) {

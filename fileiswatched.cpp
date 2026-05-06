@@ -11,6 +11,9 @@ FileIsWatched::~FileIsWatched()
 void FileIsWatched::checkState()
 {
     QFileInfo file(m_path); //инициализируем объект типа QFileInfo для получения информации об отслеживаемом файле с помощью методов класса QFileInfo
+
+
+
     file.refresh();
     qint64 nowSize = file.size(); //здесь раскрывается, зачем мы используем тип данных qint64, а не int. Дело в том, что метод size класса QFileInfo возвращает qint64
     bool nowExists = file.exists();

@@ -6,6 +6,7 @@
 #include <QString>
 
 
+
 class InputHandler: public QObject
 {
     Q_OBJECT

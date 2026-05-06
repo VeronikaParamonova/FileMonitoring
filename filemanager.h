@@ -5,6 +5,7 @@
 #include <fileiswatched.h>
 #include <QCoreApplication>
 
+
 class FileManager: public QObject
 {
     Q_OBJECT

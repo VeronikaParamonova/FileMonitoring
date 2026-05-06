@@ -2,16 +2,18 @@
 #include <QString>
 #include <QDebug>
 #include <QTimer>
-//#include <QThread>
+#include <QDir>
 #include "filemanager.h"
 #include "logtoconsole.h"
 #include "InputHandler.h"
 #include <conio.h>   // для _kbhit
-//#include "consoleworker.h"
 
 int main(int argc, char *argv[])
 {
+
     QCoreApplication a(argc, argv);
+
+    qDebug() << "Current working directory:" << QDir::currentPath();
 
     LogToConsole log; //создаём логер в стеке, т к он времени жизни переменной в стеке нам достаточно
     FileManager& manager = FileManager::Instance(); //первый вызов Instance создаст статический объект filemanager и вернёт ссылку на него

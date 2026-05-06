@@ -24,6 +24,7 @@ int InputHandler::count(QString str, QString substr)
 
 void InputHandler::preparationRead(QString str)
 {
+
     str = str.trimmed();
 
     if (str.isEmpty())
@@ -43,18 +44,18 @@ void InputHandler::preparationRead(QString str)
         emit logMessage("ERROR: more than one file entered");
         return;
     }
-    if (str.right(4) != ".txt")
-    {
-        emit logMessage("ERROR: incorrect file format");
-        return;
-    }
-    if (InputHandler::count(str,":") == 0)
-    {
-        emit logMessage("WARNING: The tracked file must be in the project folder.");
-    }
+//    if (str.right(4) != ".txt")
+//    {
+//        emit logMessage("ERROR: incorrect file format");
+//        return;
+//    }
+//    if (InputHandler::count(str,":") == 0)
+//    {
+//        emit logMessage("WARNING: The tracked file must be in the project folder.");
+//    }
 
     //создание списка всех названий из пути
-    QChar re1 = ':';
+    QString re1 = ":\\";
     QChar re2 = '\\';
     QList<QString> names = str.split(re1);
 
@@ -102,6 +103,37 @@ void InputHandler::preparationRead(QString str)
             }
         }
 
-    emit transmissionPath(str);
+    if (InputHandler::count(names.last(),".") == 0)
+    {
+        emit logMessage("ERROR: missing file format");
+        return;
+    }
+
+
+    QString str1;
+
+    if (names.size() > 1)
+    {
+        if (InputHandler::count(str,":") == 0)
+        {
+            str1 = names[0].QString::trimmed() + "\\";
+        }
+        else
+        {
+            str1 = names[0].QString::trimmed() + ":\\";
+        }
+    }
+
+    for (int i = 1; i < names.size() - 1; i++)
+    {
+        names[i] = names[i].QString::trimmed();
+        str1 += names[i];
+        str1 += "\\";
+    }
+
+
+    str1 += names.last().QString::trimmed();
+
+    emit transmissionPath(str1);
 
 }

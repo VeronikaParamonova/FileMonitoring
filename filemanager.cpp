@@ -5,6 +5,7 @@ FileManager& FileManager::Instance()
 {
     static FileManager manager;
     return manager;
+
 }
 
 FileManager::FileManager(QObject* parent) : QObject(parent) {}
@@ -30,6 +31,7 @@ bool FileManager::fileConnect(const QString& path)
 
     FileIsWatched* file = new FileIsWatched(path, this);//выделение памяти, в качестве родителя передаём файл-менеджер, который будет управлять временем жизни
     connect(file, &FileIsWatched::stateChanged, this, &FileManager::fileStateChanged);//подключения сигнала файла к слоту файл менеджера
+
 
     m_files.append(file);
     file->checkState(); //вывод начального состояния
@@ -80,6 +82,7 @@ void FileManager::inputString(const QString& str)
     {
         return;//если на вход пришла пустая строка, то мы не передаём её на подключение. Повторная проверка
     }
+
 
     //основная часть обработки
     if (findFile(str))

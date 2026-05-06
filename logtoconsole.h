@@ -4,6 +4,7 @@
 #include <iostream>
 #include <QObject>
 
+
 class LogToConsole: public QObject, public ILog
 {
     Q_OBJECT

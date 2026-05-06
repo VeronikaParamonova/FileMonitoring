@@ -91,7 +91,7 @@ Uml диаграмма прилагается.\
 Ввод: EXIT
 Вывод: Exiting the program... The program is ready to close
 ```
-###Case 3:
+  ### Case 3:
 ```
 Ввод: путь к файлу с недопустимыми символами
 Вывод: ERROR: file path contains illegal characters
